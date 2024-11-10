@@ -1,0 +1,114 @@
+create table employee(
+    employee_name varchar(100),
+    street varchar(100),
+    city varchar(100)
+    );
+
+create table works(
+    employee_name varchar(100),
+    company_name varchar(100),
+    salary decimal(10,2)
+    );
+    
+create table company(
+    company_name varchar(100),
+    city varchar(100)
+    );
+    
+create table manages(
+    employee_name varchar(100),
+    manager_name varchar(100)
+    );
+    
+insert into employee(employee_name,street,city)
+values('John Doe', '123 elm st', 'New York');
+
+insert into employee(employee_name,street,city)
+values('Jane Smith', '456 elm st', 'Los Angeles');
+
+insert into employee(employee_name,street,city)
+values('Alice Johnson', '789 pine st', 'Chicago');
+
+insert into employee(employee_name,street,city)
+values('Bob brown', '101 Maple st', 'San Francisco');
+
+insert into employee(employee_name,street,city)
+values('Charlie Davis', '202 Birch st', 'New York');
+
+insert into works (employee_name, company_name, salary)
+values('John Doe', 'First Bank Corporation', 12000);
+
+insert into works (employee_name, company_name, salary)
+values('Jane Smith', 'Tech Innovations', 15000);
+
+insert into works (employee_name, company_name, salary)
+values('Alice Johnson', 'First Bank Corporation', 25000);
+
+insert into works (employee_name, company_name, salary)
+values('Bob Brown', 'First Bank Corporation', 18000);
+
+insert into works (employee_name, company_name, salary)
+values('Charlie Davis', 'Tech Innovations', 22000);
+
+insert into company(company_name, city)
+values('First Bank Corporation', 'New York');
+
+insert into company(company_name, city)
+values('Tech Innovations', 'Los Angeles');
+
+insert into manages (employee_name,manager_name)
+values('John Doe','Alice Johnson');
+
+insert into manages (employee_name,manager_name)
+values('Jane Smith', 'Charlie Davis');
+
+insert into manages (employee_name,manager_name)
+values('Alice Johnson', 'Bob Brown');
+
+insert into manages (employee_name,manager_name)
+values('Bob Brown', 'Alice Johnson');
+
+insert into manages (employee_name,manager_name)
+values('Charlie Davis', 'John Doe');
+
+SELECT * FROM employee;
+SELECT * FROM works;
+SELECT * FROM company;
+SELECT * FROM manages;
+
+SELECT e.employee_name, e.street, e.city
+FROM employee e
+JOIN works w ON e.employee_name = w.employee_name
+WHERE w.company_name = 'First Bank Corporation'
+  AND w.salary > 10000;
+
+SELECT e.employee_name
+FROM employee e
+JOIN works w ON e.employee_name = w.employee_name
+JOIN company c ON w.company_name = c.company_name
+WHERE e.city = c.city;
+
+SELECT AVG(salary) AS average_salary
+FROM works
+WHERE company_name = 'First Bank Corporation';
+
+UPDATE works
+SET salary = salary * 1.15
+WHERE company_name = 'First Bank Corporation'
+  AND salary < 20000;
+
+SELECT * FROM works WHERE company_name = 'First Bank Corporation';
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+use BookDatabase
+
+db.Book.insertMany([
+  {
+    Title: "The Great Gatsby",
+    Description: "A novel about the American dream in the 1920s.",
+    Author: "F. Scott Fitzgerald",
+    Publisher: "Scribner",
+    URL: "http://example.com/greatgatsby",
+    no_of_likes: 1500
+  },
+  {
+    Title: "Moby Dick",
+    Description: "A story about a sea captain’s obsession with a whale.",
+    Author: "Herman Melville",
+    Publisher: "Harper & Brothers",
+    URL: "http://example.com/mobydick",
+    no_of_likes: 1200
+  },
+  {
+    Title: "1984",
+    Description: "A dystopian novel about totalitarianism.",
+    Author: "George Orwell",
+    Publisher: "Secker & Warburg",
+    URL: "http://example.com/1984",
+    no_of_likes: 3000
+  },
+  {
+    Title: "To Kill a Mockingbird",
+    Description: "A novel about racial injustice in the American South.",
+    Author: "Harper Lee",
+    Publisher: "J.B. Lippincott & Co.",
+    URL: "http://example.com/tokillamockingbird",
+    no_of_likes: 2000
+  }
+])
+
+
+db.Book.find().pretty()
+
+
+db.Book.aggregate([
+  {
+    $group: {
+      _id: "$Publisher",  // Group by the Publisher field
+      count: { $sum: 1 }   // Count the number of books for each publisher
+    }
+  }
+])
+
+
+db.Book.aggregate([
+  {
+    $group: {
+      _id: "$Author",           // Group by the Author field
+      min_likes: { $min: "$no_of_likes" } // Get the minimum number of likes for each author
+    }
+  }
+])
+
+
+db.Book.aggregate([
+  {
+    $group: {
+      _id: "$Author",           // Group by the Author field
+      max_likes: { $max: "$no_of_likes" } // Get the maximum number of likes for each author
+    }
+  }
+])
+
+
+
+

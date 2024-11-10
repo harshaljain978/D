@@ -1,0 +1,68 @@
+CREATE TABLE borrower4 (
+    rollin INT,
+    name VARCHAR(30),
+    dateofissue DATE,
+    nameofbook VARCHAR(30),
+    status CHAR(10)
+);
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (101, 'abc', TO_DATE('2017-07-16', 'YYYY-MM-DD'), 'dbms', 'r');
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (102, 'abc1', TO_DATE('2017-07-16', 'YYYY-MM-DD'), 'cn', 'i');
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (103, 'abc3', TO_DATE('2017-07-18', 'YYYY-MM-DD'), 'toc', 'i');
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (104, 'abc4', TO_DATE('2017-07-20', 'YYYY-MM-DD'), 'ds', 'i');
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (105, 'abc5', TO_DATE('2017-07-23', 'YYYY-MM-DD'), 'daa', 'r');
+
+INSERT INTO borrower4 (rollin, name, dateofissue, nameofbook, status) 
+VALUES (106, 'nisha', TO_DATE('2017-08-10', 'YYYY-MM-DD'), 'splm', 'r');
+
+CREATE TABLE library_audit1 (
+    rollin INT,
+    name CHAR(10),
+    dateofissue DATE,
+    nameofbook CHAR(10),
+    status CHAR(10),
+    ts TIMESTAMP
+);
+
+CREATE OR REPLACE TRIGGER after_insert
+AFTER INSERT ON borrower4
+FOR EACH ROW
+BEGIN
+    INSERT INTO library_audit1 (rollin, name, dateofissue, nameofbook, status, ts)
+    VALUES (:NEW.rollin, :NEW.name, :NEW.dateofissue, :NEW.nameofbook, :NEW.status, CURRENT_TIMESTAMP);
+END;
+/
+
+-- Trigger for DELETE operation
+CREATE OR REPLACE TRIGGER after_delete
+AFTER DELETE ON borrower4
+FOR EACH ROW
+BEGIN
+    INSERT INTO library_audit1 (rollin, name, dateofissue, nameofbook, status, ts)
+    VALUES (:OLD.rollin, :OLD.name, :OLD.dateofissue, :OLD.nameofbook, :OLD.status, CURRENT_TIMESTAMP);
+END;
+/
+
+-- Trigger for UPDATE operation
+CREATE OR REPLACE TRIGGER after_update
+AFTER UPDATE ON borrower4
+FOR EACH ROW
+BEGIN
+    INSERT INTO library_audit1 (rollin, name, dateofissue, nameofbook, status, ts)
+    VALUES (:OLD.rollin, :OLD.name, :OLD.dateofissue, :OLD.nameofbook, :OLD.status, CURRENT_TIMESTAMP);
+END;
+/
+
+SELECT owner, table_name 
+FROM all_tables
+WHERE table_name = 'BORROWER4';
+

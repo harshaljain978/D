@@ -1,0 +1,58 @@
+use yourDatabaseName; 
+
+db.Book.insertMany([
+  {
+    Title: "Book 1",
+    Description: "Description of Book 1",
+    Author: "Author 1",
+    Publisher: "Publisher 1",
+    URL: "http://example.com/book1",
+    no_of_likes: 100
+  },
+  {
+    Title: "Book 2",
+    Description: "Description of Book 2",
+    Author: "Author 2",
+    Publisher: "Publisher 2",
+    URL: "http://example.com/book2",
+    no_of_likes: 150
+  },
+  {
+    Title: "Book 3",
+    Description: "Description of Book 3",
+    Author: "Author 1",
+    Publisher: "Publisher 1",
+    URL: "http://example.com/book3",
+    no_of_likes: 200
+  },
+  {
+    Title: "Book 4",
+    Description: "Description of Book 4",
+    Author: "Author 3",
+    Publisher: "Publisher 3",
+    URL: "http://example.com/book4",
+    no_of_likes: 50
+  }
+]);
+
+
+
+db.Book.find().pretty();
+
+
+db.Book.aggregate([
+  { $group: { _id: "$Author", bookCount: { $sum: 1 } } }
+]);
+
+
+db.Book.aggregate([
+  { $group: { _id: "$Author", totalLikes: { $sum: "$no_of_likes" } } }
+]);
+
+
+db.Book.aggregate([
+  { $group: { _id: "$Author", avgLikes: { $avg: "$no_of_likes" } } }
+]);
+
+
+

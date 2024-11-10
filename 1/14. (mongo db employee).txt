@@ -1,0 +1,38 @@
+use myDatabase
+
+db.createCollection("Employee")
+
+db.Employee.insertMany([
+    { emp_id: 1, emp_name: "Alice", dept_name: "HR", sal: 60000 },
+    { emp_id: 2, emp_name: "Bob", dept_name: "Finance", sal: 9000 },
+    { emp_id: 3, emp_name: "Charlie", dept_name: "HR", sal: 75000 },
+    { emp_id: 4, emp_name: "David", dept_name: "Finance", sal: 11000 },
+    { emp_id: 5, emp_name: "Eve", dept_name: "HR", sal: 50000 }
+])
+
+
+db.Employee.find({ sal: { $gt: 50000 } })
+
+db.Employee.find({ sal: { $gte: 50000, $lte: 80000 } })
+
+
+db.Employee.find({ sal: { $gt: 60000 }, dept_name: "HR" })
+
+
+db.Employee.updateMany(
+    { dept_name: "HR" },
+    { 
+        $set: { sal: 50000 }, 
+        $inc: { increment: 0.10 } 
+    }
+)
+
+
+db.Employee.find({ dept_name: "HR" })
+
+
+db.Employee.deleteMany({ dept_name: "Finance", sal: { $lt: 10000 } })
+
+
+db.Employee.find()
+

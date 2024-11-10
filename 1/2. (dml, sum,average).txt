@@ -1,0 +1,72 @@
+create table student(
+    stud_id int primary key,
+    deptnm varchar(50),
+    sem int,
+    name varchar(50),
+    yr int,
+    credits int
+    );
+    
+create table teaches(
+    teacher_id int primary key,
+    teacher_name varchar(100),
+    salary decimal(10,2),
+    deptnm varchar(50)
+    );
+    
+insert into student(stud_id,deptnm,sem,name,yr,credits)
+values(1, 'comp', 3, 'Alice Johnson', 2023, 15);
+
+insert into student(stud_id,deptnm,sem,name,yr,credits)
+values(2, 'IT', 2, 'Bob Smith', 2024, 12);
+
+insert into student(stud_id,deptnm,sem,name,yr,credits)
+values(3, 'comp', 4, 'Carol Davis', 2022,18);
+
+select * from student;
+
+insert into teaches(teacher_id, teacher_name, salary, deptnm)
+values(101, 'Dr. Sarah Lee', 3000.00, 'comp');
+
+insert into teaches(teacher_id, teacher_name, salary, deptnm)
+values(102, 'Prof. Mark Brown', 2500.00, 'IT');
+
+insert into teaches(teacher_id, teacher_name, salary, deptnm)
+values(103, 'Dr. Emily Clark', 1900.00, 'math');
+
+insert into teaches(teacher_id, teacher_name, salary, deptnm)
+values(104, 'Dr. Aditi', 2900.00, 'comp');
+
+select * from teaches;
+
+update student
+set deptnm='IT'
+where deptnm='comp';
+
+select * from student;
+
+select deptnm,salary
+from teaches
+where salary=(select max(salary) from teaches);
+
+select deptnm, avg(salary) as avg_salary
+from teaches
+group by deptnm;
+
+delete from teaches
+where salary<2000;
+
+select deptnm, sum(salary) as total_salary
+from teaches
+group by deptnm;
+
+
+
+
+
+
+
+
+
+
+

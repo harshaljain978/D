@@ -1,0 +1,73 @@
+create table dept1(
+    deptid int primary key,
+    deptname varchar(10)
+    );
+    
+create table emp1(
+    empid int primary key,
+    empname varchar(10),
+    empsal int,
+    empdeptid int,
+    foreign key (empdeptid) references dept(deptid)
+    );
+    
+insert into dept1(deptid,deptname)
+values(10, 'hr');
+
+insert into dept1(deptid,deptname)
+values(20, 'finance');
+
+insert into dept1(deptid,deptname)
+values(30, 'IT');
+
+insert into dept1(deptid,deptname)
+values(40, 'sales');
+
+insert into emp1(empid,empname,empsal,empdeptid)
+values(1, 'John', 25000, 30);
+
+insert into emp1(empid,empname,empsal,empdeptid)
+values(2, 'Alice', 35000, 40);
+
+insert into emp1(empid,empname,empsal,empdeptid)
+values(3, 'Bob', 22000, 10);
+
+insert into emp1(empid,empname,empsal,empdeptid)
+values(4, 'Charlie', 28000, 30);
+
+insert into emp1(empid,empname,empsal,empdeptid)
+values(5, 'David', 20000, 20);
+
+select * from dept1;
+select * from emp1;
+
+select * 
+from emp1
+where empdeptid in (30,40,10);
+
+select *
+from emp1
+where empsal between 10000 and 30000;
+
+select count(*) as total_employees
+from emp1;
+
+select empdeptid, avg(empsal) as avg_salary
+from emp1
+group by empdeptid;
+
+select *
+from emp1
+order by empsal asc;
+
+
+
+
+
+
+
+
+
+
+
+

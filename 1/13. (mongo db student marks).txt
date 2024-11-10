@@ -1,0 +1,35 @@
+use yourDatabaseName
+
+db.createCollection("Student")
+
+
+db.Student.insertMany([
+  { stud_id: 1, stud_name: "Aditi", dept_name: "Computer", marks: 75 },
+  { stud_id: 2, stud_name: "Ravi", dept_name: "Civil", marks: 60 },
+  { stud_id: 3, stud_name: "Nina", dept_name: "Chemical", marks: 45 },
+  { stud_id: 4, stud_name: "Sam", dept_name: "Computer", marks: 85 },
+  { stud_id: 5, stud_name: "Maya", dept_name: "Civil", marks: 40 },
+  { stud_id: 6, stud_name: "Rohit", dept_name: "Civil", marks: 30 }
+])
+
+
+db.Student.find({ marks: { $gt: 50 } })
+
+
+db.Student.find({ marks: { $gte: 50, $lte: 80 } })
+
+
+db.Student.find({ dept_name: "Computer", marks: { $gt: 60 } })
+
+
+db.Student.updateMany(
+  { dept_name: "Civil" },  // Condition: Select students from the "Civil" department
+  { $set: { marks: 30 } }  // Update action: Set marks to 30
+)
+
+
+db.Student.deleteMany({ dept_name: "Chemical", marks: { $lt: 30 } })
+
+
+
+

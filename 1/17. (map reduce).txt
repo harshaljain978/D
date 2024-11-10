@@ -1,0 +1,62 @@
+use mydatabase
+
+db.Bank.insertMany([
+  {
+    cust_id: 101,
+    cust_name: "Alice",
+    branch: "Downtown",
+    balance: 5000
+  },
+  {
+    cust_id: 102,
+    cust_name: "Bob",
+    branch: "Uptown",
+    balance: 3000
+  },
+  {
+    cust_id: 103,
+    cust_name: "Charlie",
+    branch: "Downtown",
+    balance: 15000
+  },
+  {
+    cust_id: 104,
+    cust_name: "David",
+    branch: "Midtown",
+    balance: 7000
+  },
+  {
+    cust_id: 105,
+    cust_name: "Eve",
+    branch: "Uptown",
+    balance: 10000
+  }
+])
+
+
+db.Bank.find()
+
+
+var mapFunction = function() {
+    emit(this.branch, this.balance);  // emit branch as key, balance as value
+};
+
+var reduceFunction = function(key, values) {
+    return Array.sum(values);  // sum the balances for each branch
+};
+
+// Perform the MapReduce operation
+var result = db.Bank.mapReduce(
+    mapFunction,
+    reduceFunction,
+    { out: "branch_balance" }  // Output collection to store the results
+);
+
+// Display the results
+db.branch_balance.find()
+
+
+db.branch_balance.find()
+
+
+
